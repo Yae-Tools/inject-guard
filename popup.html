@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InjectGuard</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <img src="icons/icon48.png" alt="InjectGuard" class="logo-icon">
+        <h1>InjectGuard</h1>
+      </div>
+      <div class="status-indicator" id="statusIndicator">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">Scanning...</span>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="settingsBtn" aria-label="Settings" title="Settings">
+          <img width="20" height="20" src="https://img.icons8.com/color/48/settings--v1.png" alt="settings--v1"/>
+        </button>
+        <button class="icon-btn" id="aboutBtn" aria-label="About" title="About">
+          <img width="20" height="20" src="https://img.icons8.com/color/48/info.png" alt="info"/>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Loading State -->
+      <div class="loading-state" id="loadingState">
+        <div class="spinner"></div>
+        <p>Scanning page for hidden prompts...</p>
+      </div>
+
+      <!-- Safe State -->
+      <div class="safe-state hidden" id="safeState">
+        <div>
+          <img width="48" height="48" src="https://img.icons8.com/color/48/security-checked.png" alt="security-checked"/>
+        </div>
+        <h2>Page is Safe</h2>
+        <p>No hidden prompt injection attacks detected on this page.</p>
+        <div class="scan-info">
+          <span id="scanTime"></span>
+        </div>
+      </div>
+
+      <!-- Threats Found State -->
+      <div class="threats-state hidden" id="threatsState">
+        <div>
+          <img width="48" height="48" src="https://img.icons8.com/color/96/error--v1.png" alt="error--v1"/>
+        </div>
+        <h2>Hidden Prompts Detected</h2>
+        <p class="threat-summary">
+          Found <strong id="threatCount">0</strong> potential prompt injection attack(s)
+        </p>
+        
+        <div class="threats-list" id="threatsList">
+          <!-- Threats will be populated by JavaScript -->
+        </div>
+        
+        <div class="threat-actions">
+          <button class="btn btn-primary" id="viewDetailsBtn">View Details</button>
+          <button class="btn btn-secondary" id="rescanBtn">Rescan Page</button>
+        </div>
+      </div>
+
+      <!-- Error State -->
+      <div class="error-state hidden" id="errorState">
+        <div>
+          <img width="48" height="48" src="https://img.icons8.com/color/48/cancel--v1.png" alt="cancel--v1"/>
+        </div>
+        <h2>Scan Error</h2>
+        <p>Unable to scan this page. This might be due to page restrictions or extension permissions.</p>
+        <button class="btn btn-secondary" id="retryBtn">Retry Scan</button>
+      </div>
+    </main>
+
+    <!-- Detailed View -->
+    <div class="details-view hidden" id="detailsView">
+      <div class="details-header">
+        <button class="back-btn icon-btn" id="backBtn" aria-label="Back" title="Back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <h2>Threat Details</h2>
+      </div>
+      
+      <div class="details-content" id="detailsContent">
+        <!-- Detailed threat information will be populated here -->
+      </div>
+    </div>
+
+    
+
+    <!-- Settings Modal -->
+    <div class="modal hidden" id="settingsModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Settings</h3>
+          <button class="close-btn" id="closeSettingsBtn">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="setting-item">
+            <label>
+              <input type="checkbox" id="autoScanToggle">
+              Auto-scan pages on load
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" id="saveSettingsBtn">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal hidden" id="aboutModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>About InjectGuard</h3>
+          <button class="close-btn" id="closeAboutBtn">×</button>
+        </div>
+        <div class="modal-body">
+          <p><strong>InjectGuard v1.0.0</strong></p>
+          <p>Protects AI-assisted browsing by detecting hidden prompt injection attacks in web pages.</p>
+          <p>This extension scans for text that is hidden from human view but could be processed by AI tools, potentially manipulating their responses.</p>
+          <hr>
+          <p><small>Built to promote safe AI usage for everyone.</small></p>
+          <!-- Built by Azula9713 @ Yae Tools -->
+           <br />
+           <div class="about-footer">
+            Built by
+            <a href="https://azula9713.dev" target="_blank" rel="noopener noreferrer">Azula9713</a> 
+            |
+            <a href="https://yae.tools" target="_blank" rel="noopener noreferrer">Yae Tools</a> 
+            <a style="margin-left: 5px;" href="https://github.com/yourusername/inject-guard" target="_blank" rel="noopener noreferrer" aria-label="View on GitHub" title="View on GitHub">
+              <!-- svg icon that changes to dark and light mode  -->
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+            </a>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

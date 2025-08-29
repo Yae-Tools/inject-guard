@@ -1,0 +1,45 @@
+{
+  "name": "inject-guard",
+  "version": "1.0.0",
+  "description": "Browser extension that detects hidden prompt injection attacks to protect AI-assisted browsing",
+  "keywords": [
+    "browser-extension",
+    "security",
+    "ai-safety",
+    "prompt-injection",
+    "privacy",
+    "chrome-extension"
+  ],
+  "author": "Azula9713",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yae-Tools/inject-guard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Yae-Tools/inject-guard/issues"
+  },
+  "homepage": "https://github.com/Yae-Tools/inject-guard/issues#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Open test-pages/demo.html to test the extension\" && exit 0",
+    "lint": "echo \"No linting configured yet\" && exit 0",
+    "build": "echo \"No build process needed - extension ready to load\" && exit 0"
+  },
+  "files": [
+    "manifest.json",
+    "content.js",
+    "background.js",
+    "popup.html",
+    "popup.css",
+    "popup.js",
+    "icons/",
+    "test-pages/",
+    "README.md",
+    "INSTALL.md"
+  ],
+  "devDependencies": {},
+  "dependencies": {}
+}
